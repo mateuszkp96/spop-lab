@@ -22,15 +22,31 @@ morseCodes = [('A',".-"),('B',"-..."),('C',"-.-."),('D',"-.."),
     ('Y',"-.--"),('Z',"--..")]
 
 morse :: String -> String
-morse = undefined
+morse [] = []
+morse [x] = getMorseCodeForChar x
+morse (x:xs) = (getMorseCodeForChar x) ++ " " ++ morse(xs)
+
+getMorseCodeForChar :: Char -> String
+getMorseCodeForChar ch = snd (findTuple (toUpper ch) morseCodes)
+
+findTuple :: Char -> [(Char, String)] -> (Char, String)
+findTuple ch []                       = (ch, [ch])
+findTuple ch ((x,y):tail) | x == ch   = (x,y)
+                          | otherwise = findTuple ch tail
 
 {- Zadanie 2. Napisz funkcję, jak w zadaniu 1, ale w rozwiązaniu
 wykorzystaj funkcje standardowe: 'filter', 'map' i 'concat'. -}
 
 morse' :: String -> String
-morse' = undefined
+morse' []     = []
+morse' [x]    = getStandardMorseCode x
+morse' (x:xs) = concat [(getStandardMorseCode x), " ", morse' xs]
 
+getStandardMorseCode :: Char -> String
+getStandardMorseCode ch = head (map snd foundTuples)
+                          where
+                            foundTuples = filter (\(x,_) -> x == (toUpper ch)) morseCodes
 {- Sprawdź wartość 'check'. -}
 
 check = morse msg == morse' msg 
-msg   = "Houston, mamy problem!"
+msg   = "Houston, mamy problem!" {- A co ze spacjami? :)-}
