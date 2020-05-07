@@ -16,15 +16,22 @@ stosu s, a s’ stosem po jej usunięciu (dla pustego stosu s wynik
 operacji jest niezdefiniowany) -}
 
 class Stackable a where
-    -- uzupełnij
+    empty :: a
+    push :: Int -> a -> a
+    pop :: a -> (Int, a)
 
 {- Następnie stwórz przykładowy własny typ danych (bez parametrów)
 reprezentujący stos liczb całkowitych i uczyń go instancją klasy Stackable: -}
 
-data Stack -- uzupełnij
+data Stack = Stack [Int]
 
 instance Stackable Stack where
-    -- uzupełnij
+    empty   = Stack []
+
+    push value (Stack xs) = Stack (value:xs)
+
+    pop (Stack (x:xs)) = (x, Stack xs)
+    pop (Stack []) = error "Empty Stack"
 
 {- Sprawdź poprawność implementacji obliczając wartość wyrażenia:
 
