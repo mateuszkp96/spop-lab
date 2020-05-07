@@ -23,7 +23,7 @@ class Stackable a where
 {- Następnie stwórz przykładowy własny typ danych (bez parametrów)
 reprezentujący stos liczb całkowitych i uczyń go instancją klasy Stackable: -}
 
-data Stack = Stack [Int]
+data Stack = Stack [Int] deriving (Eq, Show)
 
 instance Stackable Stack where
     empty   = Stack []
